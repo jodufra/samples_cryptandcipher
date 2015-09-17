@@ -1,0 +1,5 @@
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\ApplicationLib\bin\Debug\ApplicationLib.dll
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\ApplicationLib\bin\Debug\ApplicationLib.pdb
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\ApplicationLib\obj\Debug\ApplicationLib.csprojResolveAssemblyReference.cache
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\ApplicationLib\obj\Debug\ApplicationLib.dll
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\ApplicationLib\obj\Debug\ApplicationLib.pdb

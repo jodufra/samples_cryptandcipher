@@ -1,0 +1,9 @@
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\Application\bin\Debug\Application.exe.config
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\Application\obj\Debug\Application.csprojResolveAssemblyReference.cache
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\Application\obj\Debug\Application.Form1.resources
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\Application\obj\Debug\Application.Properties.Resources.resources
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\Application\obj\Debug\Application.csproj.GenerateResource.Cache
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\Application\bin\Debug\Application.exe
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\Application\bin\Debug\Application.pdb
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\Application\obj\Debug\Application.exe
+C:\Users\2121000\Desktop\SI\Aulas\siaulas\binfiles\Application\obj\Debug\Application.pdb
