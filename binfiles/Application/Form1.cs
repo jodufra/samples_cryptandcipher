@@ -13,6 +13,7 @@ namespace Application
 {
     public partial class Form1 : Form
     {
+        private readonly int BUFFER_SIZE = 20480; 
         private bool IsDone { get; set; }
 
         public Form1()
@@ -34,10 +35,14 @@ namespace Application
                 FileStream fsRead = new FileStream("C:/temp/security.jpg", FileMode.Open);
                 FileStream fsWrite = new FileStream("C:/temp/bak_security.jpg", FileMode.Create);
 
-                int length = (int)Math.Min(20480, fsRead.Length);
+                int length = (int)Math.Min(BUFFER_SIZE, fsRead.Length);
                 byte[] buffer = new byte[length];
-                fsRead.Read(buffer, 0, length);
-                fsWrite.Write(buffer, 0, length);
+                int bytes;
+                while ((bytes = fsRead.Read(buffer, 0, length)) > 0)
+                {
+                    fsWrite.Write(buffer, 0, bytes);
+                }
+
                 fsRead.Close();
                 fsWrite.Close();
 
