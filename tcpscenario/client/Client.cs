@@ -1,4 +1,4 @@
-﻿using ApplicationLib.Utilities;
+﻿using EI.SI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,15 +25,41 @@ namespace Client
                 Console.WriteLine("ok");
                 stream = tcpc.GetStream();
 
-                int intVal = 123;
-                byte[] intMsg = BitConverter.GetBytes(intVal);
-                stream.Write(intMsg, 0, intMsg.Length);
-                Console.WriteLine("Sent: " + intVal);
+                ProtocolSI protocol = new ProtocolSI();
+                byte[] packet;
+                char key;
+                var random = new Random();
 
-                string stringVal = "Hello Server";
-                byte[] stringMsg = Encoding.UTF8.GetBytes(stringVal);
-                stream.Write(stringMsg, 0, stringMsg.Length);
-                Console.WriteLine("Sent: " + stringVal);
+                do
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("1 - Send Integer");
+                    Console.WriteLine("2 - Send Date");
+                    Console.WriteLine("0 - End Transmission");
+                    key = Console.ReadKey().KeyChar;
+
+                    switch (key)
+                    {
+                        case '1':
+                            packet = protocol.Make(ProtocolSICmdType.NORMAL, random.Next());
+                            break;
+                        case '2':
+                            packet = protocol.Make(ProtocolSICmdType.DATA, DateTime.Now.ToString());
+                            break;
+                        case '0':
+                            packet = protocol.Make(ProtocolSICmdType.EOT);
+                            break;
+                        default:
+                            Console.WriteLine();
+                            Console.WriteLine("Invalid Key!!!");
+                            continue;
+                    }
+
+                    stream.Write(packet, 0, packet.Length);
+
+                } while (key != '0');
+
+                stream.Read(protocol.Buffer, 0, protocol.Buffer.Length);
 
             }
             catch (Exception e)
@@ -43,6 +69,7 @@ namespace Client
             }
             finally
             {
+                Console.WriteLine("disconnected");
                 if (stream != null) stream.Dispose();
                 if (tcpc != null) tcpc.Close();
             }

@@ -1,4 +1,4 @@
-﻿using ApplicationLib.Utilities;
+﻿using EI.SI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,17 +28,37 @@ namespace Server
                 Console.WriteLine("ok");
                 stream = tcpc.GetStream();
 
-                var intMsg = Util.ReadStream(stream, BUFFER_SIZE);
-                Console.WriteLine("Recebeu Inteiro: " + BitConverter.ToInt32(intMsg, 0));
+                ProtocolSI protocol = new ProtocolSI();
+                ProtocolSICmdType command;
+                byte[] packet;
 
-                var stringMsg = Util.ReadStream(stream, BUFFER_SIZE);
-                Console.WriteLine("Recebeu String: " + Encoding.UTF8.GetString(stringMsg));
+                do
+                {
+                    stream.Read(protocol.Buffer, 0, protocol.Buffer.Length);
+                    command = protocol.GetCmdType();
+
+                    switch (protocol.GetCmdType())
+                    {
+                        case ProtocolSICmdType.NORMAL:
+                            Console.WriteLine("inteiro: " + protocol.GetIntFromData().ToString());
+                            break;
+                        case ProtocolSICmdType.DATA:
+                            Console.WriteLine("string: " + protocol.GetStringFromData());
+                            break;
+                        case ProtocolSICmdType.EOT:
+                            Console.WriteLine("end");
+                            break;
+                        default:
+                            Console.WriteLine("not expected");
+                            break;
+                    }
+
+                } while (command != ProtocolSICmdType.EOT);
 
 
+                packet = protocol.Make(ProtocolSICmdType.ACK);
+                stream.Write(packet, 0, packet.Length);
 
-                Console.Write("Waiting for client disconnect... ");
-                Util.ReadStream(stream, BUFFER_SIZE);
-                Console.WriteLine("disconnected");
             }
             catch (Exception e)
             {
@@ -47,6 +67,7 @@ namespace Server
             }
             finally
             {
+                Console.WriteLine("disconnected");
                 if (stream != null) stream.Dispose();
                 if (tcpc != null) tcpc.Close();
                 if (tcpl != null) tcpl.Stop();
